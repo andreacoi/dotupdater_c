@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -g
 OBJ = dup.o connect.o
-TARGET = dup
+TARGET = bin/dup
 
 $TARGET: $(OBJ)
 			$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)

@@ -34,6 +34,14 @@ int createConfigFolder(char *cf) {
   return mkdir(cf, CONF_PATH_MODE); 
 }
 
+int createBluePrintConf(char *cf) {
+  // check if the folder exists
+  if (checkConfDir(cf) == 0) {
+    // if the folder exists, check if the file exists
+  }
+  return 0;
+}
+
 // function to check if the config folder already exists, includes a recursive
 // call to createConfigFolder. Returns 0 if the folder exists or the return
 // value of the createConfigFolder().
@@ -47,3 +55,14 @@ int checkConfDir(char *cf) {
     return createConfigFolder(cf);
   }
 }
+
+int checkConfFile(char *cf) {
+  char *f = CONFIGURATION_FILE;
+  size_t lfp = strlen(cf);
+  size_t lf = strlen(f);
+  char *cp = malloc(lfp + lf + 1);
+  cp = strcpy(cp, cf);
+  cp = strcat(cf, f);
+  printf("%s", cp);
+  return 0;
+} 

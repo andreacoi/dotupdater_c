@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -g
-OBJ = dup.o connect.o conf.o
+OBJ = dup.o connect.o conf.o helper.o
 TARGET = bin/dup
 
 $TARGET: $(OBJ)
@@ -14,5 +14,8 @@ connect.o: connect.c connect.h
 
 conf.o: conf.c conf.h
 			$(CC) $(CFLAGS) -c conf.c
+
+helper.o: helper.c helper.h
+			$(CC) $(CFLAGS) -c helper.c
 clean:
 		rm -rf $(OBJ) $(TARGET)

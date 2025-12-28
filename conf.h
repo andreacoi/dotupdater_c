@@ -1,6 +1,6 @@
-#define CONFIGURATION_PATH "/.config/dotupdater/"
+#define CONFIGURATION_PATH "/.config/dotupdater-t/"
 #define CONF_PATH_MODE 0770
-#define PLACEHOLDER_TEXT_SIZE 132
+#define PLACEHOLDER_TEXT_SIZE 133
 #define CONFIGURATION_FILE "config-test.toml"
 
 /**
@@ -55,3 +55,13 @@ int createConfigFolder(char *cf);
  * @return int -> it returns 0 if the process is success, 1 otherwise.
 */
 int createBluePrintConf(char *cf, char *f);
+
+/**
+ * @brief function to verify that all conditions to run program are regularly satisfied. So, creates folder if not exists,
+ *        configuration file (blueprint only) if not exists.
+ * @param char *cf -> a string that contains the path of the configuration folder.
+ *        char *f -> a string that contains the filename of configuration file that has to be located in configuration folder.
+ * @note cf stands for configuration folder, f for file.
+ * @return int -> it returns 0 if the process is success, 1 otherwise.
+*/
+int preliminaryCheck(char *cf, char *f);

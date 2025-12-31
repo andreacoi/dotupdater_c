@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define concatStrings(...) cStr(__VA_ARGS__, NULL)
+
 char *getHomeDir() {
   char *homedir = getenv("HOME");
   return homedir;  
@@ -13,7 +15,7 @@ char *getHomeDir() {
 char *getConfigFolder() {
   char *dir = CONFIGURATION_PATH;
   char *homedir = getHomeDir();
-  char *cf = sumStrings(homedir, dir);
+  char *cf = concatStrings(homedir, dir);
   return cf;
 }
 
@@ -30,7 +32,7 @@ int createConfigFolder(char *cf) {
 }
 
 int createBluePrintConf(char *cf, char *f) {
-  char *filepath = sumStrings(cf, f);
+  char *filepath = concatStrings(cf, f);
   if (filepath == NULL) return -1;
   printf(filepath);
   char buf[PLACEHOLDER_TEXT_SIZE] = "[[repositories]]\npath = \"yourpath\"\nbranch = \"yourbranchongh\"\n# this is the structure of the file, replicate it to manage more repos.";
@@ -59,7 +61,7 @@ int isConfDirExists(char *cf) {
 
 int isConfFileExists(char *cf, char *f) {
   struct stat st;
-  char *path = sumStrings(cf, f);
+  char *path = concatStrings(cf, f);
   if (stat(path, &st) && S_ISREG(st.st_mode)) {
     free(path);
     return 0;

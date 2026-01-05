@@ -4,6 +4,10 @@
 #define L_INFO -1
 #define L_WARNING -2
 
-int createLogFile(char *logfile);
-void log(int type, char *message, char *path);
-char *getLogFilePath();
+typedef struct message {
+  int type;
+  char *date;
+  char *message;
+}Message;
+
+void log(Message *m, char *path);

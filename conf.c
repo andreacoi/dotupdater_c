@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define concatStrings(...) cStr(__VA_ARGS__, NULL)
-
 char *getHomeDir() {
   char *homedir = getenv("HOME");
   return homedir;  

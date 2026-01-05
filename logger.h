@@ -7,7 +7,7 @@
 typedef struct message {
   int type;
   char *date;
-  char *message;
+  char *text;
 }Message;
 
 void log(Message *m, char *path);

@@ -24,16 +24,26 @@ char *getConfigFile() {
   return f;
 }
 
-int createConfigFolder(char *cf) {
-  // TODO: insert the logger functions
-  return mkdir(cf, CONF_PATH_MODE); 
+char *getLogFilesFolder() {
+  char *dir = LOG_LOCATION;
+  return dir;
 }
 
-int createBluePrintConf(char *cf, char *f) {
-  char *filepath = concatStrings(cf, f);
+char *getLogFile() {
+  char *f = LOG_FILE;
+  return f;
+}
+
+int createFolder(char *dir) {
+  // TODO: insert the logger functions
+  return mkdir(dir, MODE); 
+}
+
+int createFile(char *dir, char *f, char *content) {
+  char *filepath = concatStrings(dir, f);
   if (filepath == NULL) return -1;
-  printf(filepath);
-  char buf[PLACEHOLDER_TEXT_SIZE] = "[[repositories]]\npath = \"yourpath\"\nbranch = \"yourbranchongh\"\n# this is the structure of the file, replicate it to manage more repos.";
+  char buf[PLACEHOLDER_TEXT_SIZE];
+  memcpy(buf, content, PLACEHOLDER_TEXT_SIZE - 1);
   FILE *bpf = fopen(filepath, "w+");
   if (bpf == NULL) {
     free(filepath);
@@ -41,6 +51,7 @@ int createBluePrintConf(char *cf, char *f) {
   }
   if (fwrite(buf,sizeof(char),strlen(buf), bpf) < strlen(buf)) {
     perror("write error");
+    free(filepath);
     return -1;
   }
   free(filepath);
@@ -48,18 +59,18 @@ int createBluePrintConf(char *cf, char *f) {
   return 0;
 }
 
-int isConfDirExists(char *cf) {
+int isDirExists(char *dir) {
   struct stat st;
-  if (stat(cf, &st) && S_ISDIR(st.st_mode)) {
+  if (stat(dir, &st) && S_ISDIR(st.st_mode)) {
     return 0;
   } else {
     return 1;
   }
 }
 
-int isConfFileExists(char *cf, char *f) {
+int isFileExists(char *dir, char *f) {
   struct stat st;
-  char *path = concatStrings(cf, f);
+  char *path = concatStrings(dir, f);
   if (stat(path, &st) && S_ISREG(st.st_mode)) {
     free(path);
     return 0;
@@ -69,16 +80,24 @@ int isConfFileExists(char *cf, char *f) {
   }
 }
 
-int preliminaryCheck(char *cf, char *f) {
-  if (isConfDirExists(cf) == 0 && isConfFileExists(cf, f) == 0) {
-    return 0;
-  } else if (isConfDirExists(cf) == 1) {
-    createConfigFolder(cf);
-    createBluePrintConf(cf, f);
-    return -2;
-  } else if (isConfFileExists(cf, f) == 1) {
-    createBluePrintConf(cf, f);
-    return -1;
+int preliminaryCheck() {
+  char *cfolder = getConfigFolder();
+  char *cfile = getConfigFile();
+  char *lfolder = getLogFilesFolder();
+  char *lfile  = getLogFile();
+
+  if (isDirExists(lfolder) == 1) {
+    if (createFolder(lfolder) != 0) {
+      perror("create folder");
+      return -1;
+    } 
+  }
+  if (isFileExists(lfolder, lfile) == 1) {
+    if (createFile(lfolder, lfile, "Log file created.") != 0) {
+      perror("create file");
+      return -1;
+    }  
   }
   return 0;
 }
+

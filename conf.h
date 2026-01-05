@@ -1,7 +1,11 @@
 #define CONFIGURATION_PATH "/.config/dotupdater-t/"
-#define CONF_PATH_MODE 0770
+#define BPCONTENT "[[repositories]]\npath = \"yourpath\"\nbranch = \"yourbranchongh\"\n# this is the structure of the file, replicate it to manage more repos."
+#define MODE 0770
 #define PLACEHOLDER_TEXT_SIZE 133
 #define CONFIGURATION_FILE "config-test.toml"
+#define LOG_FILE "dotupdater-test.log"
+#define LOG_LOCATION "/var/tmp/"
+#define LOG_FOLDER "dotupdater_logs"
 
 /**
  * @brief function to retrieve the home dir using env $HOME
@@ -10,8 +14,21 @@
 char *getHomeDir(void);
 
 /**
- * @brief function to retrieve the config folder using the concatenation of the 
- *        string CONFIGURATION_PATH and the return value of the function getHomeDir().
+ * @brief function to retrieve the log files folder using the concatenation of the 
+ *        string LOG_LOCATION and the string LOG_FOLDER.
+ *        @return char * -> the path of log folder, sum of log location dir + log folder.
+*/
+char *getLogFilesFolder(void);
+
+/**
+ * @brief function to retrieve the log file name stored in LOG_FILE.
+ * @return char * -> the name of log file.
+*/
+char *getLogFile(void);
+
+/**
+ * @brief function to retrieve the log files folder using the concatenation of the 
+ *        string LOG_FOLDER and the return value of the function getHomeDir().
  * @return char * -> the path of config folder, sum of home dir + CONFIGURATION_PATH.
 */
 char *getConfigFolder(void);
@@ -24,44 +41,38 @@ char *getConfigFile(void);
 
 /**
  * @brief function to check if the config folder already exists 
- * @param char *cf -> a string that contains the path of the configuration folder.
+ * @param char *dir -> a string that contains the path of the folder.
  * @return int -> it's a boolean function, returns 0 if true, 1 otherwise.
  * @note cf stands for configuration folder.
 */
-int isConfDirExists(char *cf);
+int isDirExists(char *dir);
 
 /**
  * @brief function to check if the config file already exists in the specified config folder.
- * @param char *cf -> a string that contains the path of the configuration folder.
- *        char *f -> a string that contains the filename into the configuration folder.
- * @note cf stands for configuration folder, f for file.
+ * @param char *dir -> a string that contains the path of the folder.
+ *        char *f -> a string that contains the file name.
  * @return int -> it's a boolean function, returns 0 if true, 1 otherwise.
 */
-int isConfFileExists(char *cf, char *f);
+int isFileExists(char *dir, char *f);
 
 /**
  * @brief wrapper function to create the config folder.
- * @param char *cf -> a string that contains the path of the configuration folder.
- * @note cf stands for configuration folder.
+ * @param char *dir -> a string that contains the path of the configuration folder.
  * @return int -> it returns the same values of mkdir function (man mkdir(3)).
 */
-int createConfigFolder(char *cf);
+int createFolder(char *dir);
 
 /**
- * @brief function to create a blueprint TOML file to help the user in the starting configuration process.
- * @param char *cf -> a string that contains the path of the configuration folder.
- *        char *f -> a string that contains the filename of configuration file that has to be located in configuration folder.
- * @note cf stands for configuration folder, f for file.
+ * @brief function to create a file.
+ * @param char *dir -> a string that contains the path of the file to be created.
+ *        char *f -> a string that contains the file name in the folder dir.
  * @return int -> it returns 0 if the process is success, 1 otherwise.
 */
-int createBluePrintConf(char *cf, char *f);
+int createFile(char *dir, char *f, char *content);
 
 /**
  * @brief function to verify that all conditions to run program are regularly satisfied. So, creates folder if not exists,
- *        configuration file (blueprint only) if not exists.
- * @param char *cf -> a string that contains the path of the configuration folder.
- *        char *f -> a string that contains the filename of configuration file that has to be located in configuration folder.
- * @note cf stands for configuration folder, f for file.
+ *        configuration file (blueprint only) if not exists. This function also creates the log folder with its log file.
  * @return int -> it returns 0 if the process is success, 1 otherwise.
 */
-int preliminaryCheck(char *cf, char *f);
+int preliminaryCheck(void);

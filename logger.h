@@ -10,4 +10,4 @@ typedef struct message {
   char *text;
 }Message;
 
-void log(Message *m, char *path);
+void log(char *mtext, int type, char *path);

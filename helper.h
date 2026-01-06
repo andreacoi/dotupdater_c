@@ -8,3 +8,9 @@
  * @return char * -> the string resulting of the concatenation process.
 */
 char *cStr(char *first, ...);
+
+/**
+ * @brief function to get current date
+ * @return char * -> a string that contains the date.
+*/
+char *getCurrentDate();

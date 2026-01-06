@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <time.h>
 // function to return a string that is the concatenation of all the strings pas
 // ssed as arguments of the function itself.
 char *cStr(char *first, ...) {
@@ -53,4 +54,12 @@ char *cStr(char *first, ...) {
   va_end(args);
 
   return result;
+}
+
+char *getCurrentDate() {
+  time_t t = time(NULL);
+  struct tm *tm = localtime(&t);
+  char *s = malloc(64 * sizeof(char));
+  strftime(s, 64, "%c", tm);
+  return s;
 }

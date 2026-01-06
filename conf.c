@@ -35,15 +35,15 @@ char *getLogFile() {
 }
 
 int createFolder(char *dir) {
-  // TODO: insert the logger functions
   return mkdir(dir, MODE); 
 }
 
 int createFile(char *dir, char *f, char *content) {
   char *filepath = concatStrings(dir, f);
   if (filepath == NULL) return -1;
-  char buf[PLACEHOLDER_TEXT_SIZE];
-  memcpy(buf, content, PLACEHOLDER_TEXT_SIZE - 1);
+  size_t sl = strlen(content);
+  char *buf = malloc(sl + 1);
+  memcpy(buf, content, sl);
   FILE *bpf = fopen(filepath, "w+");
   if (bpf == NULL) {
     free(filepath);
@@ -100,4 +100,3 @@ int preliminaryCheck() {
   }
   return 0;
 }
-

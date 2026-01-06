@@ -1,7 +1,6 @@
 #define CONFIGURATION_PATH "/.config/dotupdater-t/"
-#define BPCONTENT "[[repositories]]\npath = \"yourpath\"\nbranch = \"yourbranchongh\"\n# this is the structure of the file, replicate it to manage more repos."
+#define BPCONTENT "==== bpcontent ==== remove THIS LINE ====\n[[repositories]]\npath = \"yourpath\"\nbranch = \"yourbranchongh\"\n# this is the structure of the file, replicate it to manage more repos."
 #define MODE 0770
-#define PLACEHOLDER_TEXT_SIZE 133
 #define CONFIGURATION_FILE "config-test.toml"
 #define LOG_FILE "dotupdater-test.log"
 #define LOG_LOCATION "/var/tmp/"

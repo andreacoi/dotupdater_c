@@ -4,10 +4,12 @@
 #define L_INFO -1
 #define L_WARNING -2
 
+#define LOGFILE "/var/tmp/dupc_logs/dupc.logs"
+
 typedef struct message {
-  int type;
+  char *type;
   char *date;
   char *text;
 }Message;
 
-void log(char *mtext, int type, char *path);
+void dup_log(char *mtext, int type);
